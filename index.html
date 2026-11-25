@@ -62,6 +62,19 @@ h2{font-size:clamp(28px,3.6vw,40px);line-height:1.05;letter-spacing:-.02em;margi
 .day li b{white-space:nowrap}
 .sleep{grid-column:1/-1;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--soft)}
 .sleep strong{color:var(--ink)}
+.rd{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--card)}
+.rd summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:14px;align-items:center;min-height:56px;padding:8px 16px;cursor:pointer;list-style:none}
+.rd summary::-webkit-details-marker{display:none}
+.rd summary::after{content:'+';font:700 22px Outfit,sans-serif;color:var(--f1);grid-column:4}
+.rd[open] summary::after{content:'–'}
+.rn{font:800 26px Outfit,sans-serif;color:var(--f1);min-width:1.2em;text-align:right}
+.rt{font-weight:600}
+.rt small{display:block;color:var(--soft);font-weight:400;font-size:14px}
+.rc{color:var(--soft);font-size:14px;white-space:nowrap}
+.rd ul,.rd p{margin:0;padding:4px 16px 14px 58px;list-style:none}
+.rd li{padding:6px 0;border-top:1px dashed var(--line)}
+.rd li:first-child{border-top:0}
+.rd summary:focus-visible{outline:3px solid var(--f1);outline-offset:2px;border-radius:12px}
 .empty{color:var(--soft);font-style:italic}
 .day{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;transition:border-color .15s,transform .15s}
 .day:hover{border-color:var(--c)}
@@ -134,7 +147,8 @@ footer{color:var(--soft);font-size:14px}
   <div class="wrap todo">
     <div>
       <h2>Qué reservar</h2>
-      <ul id="res"></ul>
+      <p class="cap" style="margin:-6px 0 14px">Pulsa un día para ver qué hay que reservar.</p>
+      <div id="res"></div>
     </div>
   </div>
 </section>
@@ -278,20 +292,25 @@ const dias=[
          'Arequipa está a 2.300 m: primer día con calma para aclimatarse']}
 ];
 
-const reservar=['Vuelo BCN → Lima',
-                'Vuelo STG → Lima',
-                'Hotel Lima (Wyndham) – 5 abril',
-                'Bus Cruz del Sur Lima → Paracas – 6 abril, 10:30',
-                'Alojamiento Paracas – 2 noches (6 y 7)',
-                'Tour Ballestas + Reserva (GetYourGuide) – 7 abril',
-                'Bus Cruz del Sur Paracas → Ica – 8 abril, 10:10',
-                'Alojamiento Huacachina – 1 noche (8)',
-                'Bus Cruz del Sur Ica → Nazca – 9 abril, 12:00',
-                'Alojamiento Nazca – 1 noche (9)',
-                'Vuelo líneas de Nazca – 10 abril (reservar allí)',
-                'Alojamiento Chala – 1 noche (10)',
-                'Bus Chala → Arequipa – 11 abril (comprar en Chala)',
-                'Alojamiento Arequipa – 3 noches (11, 12 y 13)'];
+/* QUÉ RESERVAR, por días: el número es el día del viaje.
+   Cada lista va entre [ ] con textos entre 'comillas' separados por comas. */
+const reservar={
+ 1:['Vuelo BCN → Lima',
+    'Vuelo STG → Lima',
+    'Hotel en Lima: Wyndham Costa del Sol (1 noche)'],
+ 2:['Bus Cruz del Sur Lima → Paracas, 10:30',
+    'Alojamiento en Paracas (2 noches: 6 y 7)'],
+ 3:['Tour Islas Ballestas + Reserva de Paracas (GetYourGuide)'],
+ 4:['Bus Cruz del Sur Paracas → Ica, 10:10',
+    'Alojamiento en Huacachina (1 noche)'],
+ 5:['Bus Cruz del Sur Ica → Nazca, 12:00',
+    'Alojamiento en Nazca (1 noche)'],
+ 6:['Vuelo sobre las líneas de Nazca (reservar allí el día 5)',
+    'Bus Nazca → Chala (comprar en la terminal)',
+    'Alojamiento en Chala (1 noche)'],
+ 7:['Bus Chala → Arequipa (comprar en Chala el día 6)',
+    'Alojamiento en Arequipa (3 noches: 11, 12 y 13)']
+};
 
    
 /* ==================== fin de los datos ==================== */
@@ -312,7 +331,11 @@ document.getElementById('phases').innerHTML=phases.map(ph=>`
    <div class="more">Abrir ficha →</div>
   </article>`}).join('')}</div>
 </div></section>`).join('');
-document.getElementById('res').innerHTML=reservar.length?reservar.map(r=>`<li><span>☐</span><span>${r}</span></li>`).join(''):`<li>${vacio}</li>`;
+document.getElementById('res').innerHTML=dias.map((d,i)=>{const r=reservar[i+1]||[];return `
+ <details class="rd">
+  <summary><span class="rn">${i+1}</span><span class="rt">${d.t}<small>${d.d}</small></span><span class="rc">${r.length?r.length+(r.length>1?' cosas':' cosa'):'Nada'}</span></summary>
+  ${r.length?`<ul>${r.map(x=>`<li>☐ ${x}</li>`).join('')}</ul>`:`<p>${vacio}</p>`}
+ </details>`}).join('');
 
 const dlg=document.getElementById('dlg'),dbody=document.getElementById('dbody');
 let cur=1;

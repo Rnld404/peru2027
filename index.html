@@ -120,30 +120,32 @@ footer{color:var(--soft);font-size:14px}
 </style>
 </head>
 <body>
-<div class="weave" aria-hidden="true"><span style="--d:1"></span><span style="--d:1"></span></div>
+<div class="weave" aria-hidden="true"><span style="--d:1"></span><span style="--d:1"></span><span style="--d:1"></span><span style="--d:1"></span></div>
 <div class="hero"><span>Perú 2027</span></div>   
 <header class="band">
   <div class="wrap">
     <div class="top">
       <div>
-        <h1>· Fase 1: la costa sur</h1>
+        <h1>28 días por Perú</h1>
         <p class="lead">Para darnos un poco de motivación, vamos a preparar el viaje juntos, por fases. Cada uno puede proponer hoteles, rutas, buses, actividades y restaurantes, y lo vamos cerrando poco a poco. Empezamos por la Fase 1: del 5 al 11 de abril, de Lima a Arequipa por la costa. ¡TQMM! 💛</p>
         <p class="lead" style="font-size:15px">Pulsa cualquier día para abrir su ficha.</p>
       </div>
       <div class="facts">
-        <div><b>14</b><span>días</span></div>
-        <div><b>2</b><span>fases</span></div>
+        <div><b>28</b><span>días</span></div>
+        <div><b>4</b><span>fases</span></div>
         <div><b>3.830 m</b><span>noche más alta (Puno)</span></div>
       </div>
     </div>
     <div class="fig" id="fig" role="img" aria-label="Perfil de altitud de cada noche"><svg id="prof"></svg></div>
-    <p class="cap">Altitud de cada noche. La Fase 1 va junto al mar; en la Fase 2 subimos al altiplano.</p>
+    <p class="cap">Altitud de cada noche: de la costa al altiplano, Cusco y bajada a la selva.</p>
   </div>
 </header>
 
 <nav aria-label="Secciones"><div class="wrap">
   <a href="#fase-1"><i style="background:var(--f1)"></i>Fase 1 · Costa sur</a>
   <a href="#fase-2"><i style="background:var(--f2)"></i>Fase 2 · Arequipa y Titicaca</a>
+  <a href="#fase-3"><i style="background:var(--f3)"></i>Fase 3 · Cusco y Machu Picchu</a>
+  <a href="#fase-4"><i style="background:var(--f4)"></i>Fase 4 · Selva y vuelta</a>
   <a href="#reservar">Qué reservar</a>
 </div></nav>
 
@@ -313,7 +315,33 @@ const dias2=[
  {t:'Puno → Cusco',d:'Dom 18 abr',a:3400,plan:[],tr:[],st:[],notas:[]}
 ];
 
-/* QUÉ RESERVAR, por días: el número es el día del viaje (Fase 2 = días 8 a 14).
+/* ==================== FASE 3 ==================== */
+const fase3={nombre:'Fase 3 · Cusco y Machu Picchu',fechas:'19–25 abril',ruta:'Cusco, Valle Sagrado y Machu Picchu'};
+
+const dias3=[
+ {t:'Cusco',d:'Lun 19 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Cusco',d:'Mar 20 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Valle Sagrado',d:'Mié 21 abr',a:2790,plan:[],tr:[],st:[],notas:[]},
+ {t:'Ollantaytambo → Aguas Calientes',d:'Jue 22 abr',a:2040,plan:[],tr:[],st:[],notas:[]},
+ {t:'Machu Picchu → Cusco',d:'Vie 23 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Cusco',d:'Sáb 24 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Montaña de Colores',d:'Dom 25 abr',a:3400,plan:[],tr:[],st:[],notas:[]}
+];
+
+/* ==================== FASE 4 ==================== */
+const fase4={nombre:'Fase 4 · Selva y vuelta',fechas:'26 abril – 2 mayo',ruta:'Cusco, Puerto Maldonado y la selva de Tambopata, y vuelta por Lima'};
+
+const dias4=[
+ {t:'Cusco',d:'Lun 26 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Cusco → Puerto Maldonado',d:'Mar 27 abr',a:200,plan:[],tr:[],st:[],notas:[]},
+ {t:'Selva de Tambopata',d:'Mié 28 abr',a:200,plan:[],tr:[],st:[],notas:[]},
+ {t:'Selva de Tambopata',d:'Jue 29 abr',a:200,plan:[],tr:[],st:[],notas:[]},
+ {t:'Selva de Tambopata',d:'Vie 30 abr',a:200,plan:[],tr:[],st:[],notas:[]},
+ {t:'Puerto Maldonado → Lima',d:'Sáb 1 may',a:150,plan:[],tr:[],st:[],notas:[]},
+ {t:'Vuelta a casa',d:'Dom 2 may',a:150,plan:[],tr:[],st:[],notas:[]}
+];
+
+/* QUÉ RESERVAR, por días: el número es el día del viaje (Fase 2 = días 8 a 14, Fase 3 = 15 a 21, Fase 4 = 22 a 28).
    Cada lista va entre [ ] con textos entre 'comillas' separados por comas. */
 const reservar={
  1:['Vuelo BCN → Lima',
@@ -336,7 +364,7 @@ const reservar={
    
 /* ==================== fin de los datos ==================== */
 
-const fases=[{...fase,c:'--f1',dias},{...fase2,c:'--f2',dias:dias2}];
+const fases=[{...fase,c:'--f1',dias},{...fase2,c:'--f2',dias:dias2},{...fase3,c:'--f3',dias:dias3},{...fase4,c:'--f4',dias:dias4}];
 const days=fases.flatMap(f=>f.dias.map(d=>({...d,c:f.c})));
 const info=Object.fromEntries(days.map((d,i)=>[i+1,d]));
 const vacio='<span class="empty">Por rellenar ✏️</span>';
@@ -395,7 +423,7 @@ const fromHash=()=>{const m=location.hash.match(/^#dia-(\d+)$/);if(m)openDay(+m[
 window.addEventListener('hashchange',fromHash);fromHash();
 
 const N=days.length;
-const stops=[[1,'Lima'],[2,'Paracas'],[4,'Huacachina'],[5,'Nazca'],[6,'Chala'],[7,'Arequipa'],[10,'Colca'],[12,'Titicaca'],[14,'Cusco']];
+const stops=[[1,'Lima'],[2,'Paracas'],[4,'Huacachina'],[5,'Nazca'],[6,'Chala'],[7,'Arequipa'],[10,'Colca'],[12,'Titicaca'],[14,'Cusco'],[17,'Valle Sagrado'],[18,'Machu Picchu'],[23,'Tambopata'],[27,'Lima']];
 const topA=Math.max(2500,Math.ceil(Math.max(...days.map(d=>d.a))/500)*500);
 const s=document.getElementById('prof');
 const draw=()=>{
@@ -405,14 +433,14 @@ const draw=()=>{
  let o='';
  let k0=0;phases.forEach(ph=>{const a0=k0+1,a1=k0+ph.days.length;k0=a1;const half=N>1?(x(2)-x(1))/2:0;const x0=Math.max(ml,x(a0)-half),x1=Math.min(W-mr,x(a1)+half);o+=`<rect x="${x0}" y="${mt-26}" width="${x1-x0}" height="${H-mt-mb+26}" fill="var(${ph.c})" opacity=".07"/>`});
  [...Array(top/500+1).keys()].map(k=>k*500).forEach(a=>{if(a%1000&&(narrow||top>2500)&&a!==top)return;o+=`<line x1="${ml}" x2="${W-mr}" y1="${y(a)}" y2="${y(a)}" stroke="var(--line)"/><text class="ax" x="${ml-8}" y="${y(a)+4}" text-anchor="end">${a.toLocaleString('es-ES')} m</text>`});
- days.forEach((d,i)=>{const step=narrow?(N>7?4:1):(N>7?2:1);if(i!==N-1&&(i%step||(N-1-i)<step/2))return;const lab=(narrow||N>7)?d.d.split(' ').slice(1).join(' '):d.d;o+=`<text class="ax" x="${x(i+1)}" y="${H-8}" text-anchor="${i===0?'start':i===N-1?'end':'middle'}">${lab}</text>`});
+ days.forEach((d,i)=>{const step=narrow?(N>14?7:N>7?4:1):(N>14?3:N>7?2:1);if(i!==N-1&&(i%step||(N-1-i)<step/2))return;const lab=(narrow||N>7)?d.d.split(' ').slice(1).join(' '):d.d;o+=`<text class="ax" x="${x(i+1)}" y="${H-8}" text-anchor="${i===0?'start':i===N-1?'end':'middle'}">${lab}</text>`});
  const pts=days.map((d,i)=>[x(i+1),y(d.a)]);
  const path='M'+pts.map(p=>p.join(',')).join('L');
  o+=`<path d="${path}L${x(N)},${y(0)}L${x(1)},${y(0)}Z" fill="var(--ink)" opacity=".06"/>`;
  let len=0;for(let i=1;i<pts.length;i++)len+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
  o+=`<path class="line" style="--len:${Math.ceil(len)}" d="${path}" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>`;
  days.forEach((d,i)=>{o+=`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${narrow?4:6}" fill="var(${d.c})" stroke="var(--bg)" stroke-width="2"/>`});
- stops.forEach(([d,l],k)=>{if(d>N)return;if(narrow&&!['Lima','Arequipa','Titicaca','Cusco'].includes(l))return;const below={'Colca':26};const dy=below[l]||(d===N?-14:(days[d-1].a<1000?(k%2?-32:-14):-14));const anc=d===1?'start':d>=N-1?'end':'middle';o+=`<text x="${x(d)}" y="${y(days[d-1].a)+dy}" text-anchor="${anc}">${l}</text>`});
+ stops.forEach(([d,l],k)=>{if(d>N)return;if(narrow&&!['Lima','Arequipa','Titicaca','Machu Picchu','Tambopata'].includes(l))return;const below={'Colca':26,'Machu Picchu':26};const dy=below[l]||(d===N?-14:(days[d-1].a<1000?(k%2?-32:-14):-14));const anc=d===1?'start':d>=N-1?'end':'middle';o+=`<text x="${x(d)}" y="${y(days[d-1].a)+dy}" text-anchor="${anc}">${l}</text>`});
  s.innerHTML=o;
 };
 const ro=new ResizeObserver(draw);ro.observe(s);

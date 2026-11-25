@@ -65,16 +65,16 @@ h2{font-size:clamp(28px,3.6vw,40px);line-height:1.05;letter-spacing:-.02em;margi
 .rd{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--card)}
 .rd summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:14px;align-items:center;min-height:56px;padding:8px 16px;cursor:pointer;list-style:none}
 .rd summary::-webkit-details-marker{display:none}
-.rd summary::after{content:'+';font:700 22px Outfit,sans-serif;color:var(--f1);grid-column:4}
+.rd summary::after{content:'+';font:700 22px Outfit,sans-serif;color:var(--c,var(--f1));grid-column:4}
 .rd[open] summary::after{content:'–'}
-.rn{font:800 26px Outfit,sans-serif;color:var(--f1);min-width:1.2em;text-align:right}
+.rn{font:800 26px Outfit,sans-serif;color:var(--c,var(--f1));min-width:1.2em;text-align:right}
 .rt{font-weight:600}
 .rt small{display:block;color:var(--soft);font-weight:400;font-size:14px}
 .rc{color:var(--soft);font-size:14px;white-space:nowrap}
 .rd ul,.rd p{margin:0;padding:4px 16px 14px 58px;list-style:none}
 .rd li{padding:6px 0;border-top:1px dashed var(--line)}
 .rd li:first-child{border-top:0}
-.rd summary:focus-visible{outline:3px solid var(--f1);outline-offset:2px;border-radius:12px}
+.rd summary:focus-visible{outline:3px solid var(--c,var(--f1));outline-offset:2px;border-radius:12px}
 .empty{color:var(--soft);font-style:italic}
 .day{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;transition:border-color .15s,transform .15s}
 .day:hover{border-color:var(--c)}
@@ -108,6 +108,8 @@ dialog::backdrop{background:rgb(15 8 20/.55)}
 .todo li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
 .todo li b{flex:none;width:7.5em;font-family:Outfit,sans-serif}
 .todo h2{margin-bottom:14px}
+.rph{font:700 18px Outfit,sans-serif;margin:22px 0 10px}
+.rph:first-of-type{margin-top:4px}
 footer{color:var(--soft);font-size:14px}
 @media(max-width:760px){header .top,.todo{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.num{font-size:36px}.day{padding:14px}}
@@ -118,7 +120,7 @@ footer{color:var(--soft);font-size:14px}
 </style>
 </head>
 <body>
-<div class="weave" aria-hidden="true"><span style="--d:1"></span></div>
+<div class="weave" aria-hidden="true"><span style="--d:1"></span><span style="--d:1"></span></div>
 <div class="hero"><span>Perú 2027</span></div>   
 <header class="band">
   <div class="wrap">
@@ -129,18 +131,19 @@ footer{color:var(--soft);font-size:14px}
         <p class="lead" style="font-size:15px">Pulsa cualquier día para abrir su ficha.</p>
       </div>
       <div class="facts">
-        <div><b>7</b><span>días</span></div>
-        <div><b>6</b><span>paradas</span></div>
-        <div><b>2.335 m</b><span>llegada a Arequipa</span></div>
+        <div><b>14</b><span>días</span></div>
+        <div><b>2</b><span>fases</span></div>
+        <div><b>3.830 m</b><span>noche más alta (Puno)</span></div>
       </div>
     </div>
-    <div class="fig" id="fig" role="img" aria-label="Perfil de altitud de cada noche de la Fase 1"><svg id="prof"></svg></div>
-    <p class="cap">Altitud de cada noche de la Fase 1.</p>
+    <div class="fig" id="fig" role="img" aria-label="Perfil de altitud de cada noche"><svg id="prof"></svg></div>
+    <p class="cap">Altitud de cada noche. La Fase 1 va junto al mar; en la Fase 2 subimos al altiplano.</p>
   </div>
 </header>
 
 <nav aria-label="Secciones"><div class="wrap">
   <a href="#fase-1"><i style="background:var(--f1)"></i>Fase 1 · Costa sur</a>
+  <a href="#fase-2"><i style="background:var(--f2)"></i>Fase 2 · Arequipa y Titicaca</a>
   <a href="#reservar">Qué reservar</a>
 </div></nav>
 
@@ -295,7 +298,22 @@ const dias=[
          'Arequipa está a 2.300 m: primer día con calma para aclimatarse']}
 ];
 
-/* QUÉ RESERVAR, por días: el número es el día del viaje.
+
+/* ==================== FASE 2 ====================
+   Igual que la Fase 1: rellenar plan, tr, st y notas de cada día. */
+const fase2={nombre:'Fase 2 · Arequipa, Colca y Titicaca',fechas:'12–18 abril',ruta:'Arequipa, Cañón del Colca, Puno y el lago Titicaca'};
+
+const dias2=[
+ {t:'Arequipa',d:'Lun 12 abr',a:2335,plan:[],tr:[],st:[],notas:[]},
+ {t:'Arequipa',d:'Mar 13 abr',a:2335,plan:[],tr:[],st:[],notas:[]},
+ {t:'Cañón del Colca',d:'Mié 14 abr',a:3635,plan:[],tr:[],st:[],notas:[]},
+ {t:'Colca → Puno',d:'Jue 15 abr',a:3830,plan:[],tr:[],st:[],notas:[]},
+ {t:'Titicaca: Uros y Amantaní',d:'Vie 16 abr',a:3820,plan:[],tr:[],st:[],notas:[]},
+ {t:'Taquile → Puno',d:'Sáb 17 abr',a:3830,plan:[],tr:[],st:[],notas:[]},
+ {t:'Puno → Cusco',d:'Dom 18 abr',a:3400,plan:[],tr:[],st:[],notas:[]}
+];
+
+/* QUÉ RESERVAR, por días: el número es el día del viaje (Fase 2 = días 8 a 14).
    Cada lista va entre [ ] con textos entre 'comillas' separados por comas. */
 const reservar={
  1:['Vuelo BCN → Lima',
@@ -318,10 +336,11 @@ const reservar={
    
 /* ==================== fin de los datos ==================== */
 
-const days=dias.map(d=>({...d,c:'--f1'}));
+const fases=[{...fase,c:'--f1',dias},{...fase2,c:'--f2',dias:dias2}];
+const days=fases.flatMap(f=>f.dias.map(d=>({...d,c:f.c})));
 const info=Object.fromEntries(days.map((d,i)=>[i+1,d]));
 const vacio='<span class="empty">Por rellenar ✏️</span>';
-const phases=[{id:1,c:'--f1',name:fase.nombre,dates:fase.fechas,sub:fase.ruta,days}];
+const phases=fases.map((f,k)=>({id:k+1,c:f.c,name:f.nombre,dates:f.fechas,sub:f.ruta,days:f.dias}));
 let n=0;
 document.getElementById('phases').innerHTML=phases.map(ph=>`
 <section class="band phase" id="fase-${ph.id}"><div class="wrap">
@@ -334,11 +353,12 @@ document.getElementById('phases').innerHTML=phases.map(ph=>`
    <div class="more">Abrir ficha →</div>
   </article>`}).join('')}</div>
 </div></section>`).join('');
-document.getElementById('res').innerHTML=dias.map((d,i)=>{const r=reservar[i+1]||[];return `
- <details class="rd">
-  <summary><span class="rn">${i+1}</span><span class="rt">${d.t}<small>${d.d}</small></span><span class="rc">${r.length?r.length+(r.length>1?' cosas':' cosa'):'Nada'}</span></summary>
+let rn=0;
+document.getElementById('res').innerHTML=phases.map(ph=>`<h3 class="rph" style="color:var(${ph.c})">${ph.name}</h3>`+ph.days.map(d=>{rn++;const r=reservar[rn]||[];return `
+ <details class="rd" style="--c:var(${ph.c})">
+  <summary><span class="rn">${rn}</span><span class="rt">${d.t}<small>${d.d}</small></span><span class="rc">${r.length?r.length+(r.length>1?' cosas':' cosa'):'Nada'}</span></summary>
   ${r.length?`<ul>${r.map(x=>`<li>☐ ${x}</li>`).join('')}</ul>`:`<p>${vacio}</p>`}
- </details>`}).join('');
+ </details>`}).join('')).join('');
 
 const dlg=document.getElementById('dlg'),dbody=document.getElementById('dbody');
 let cur=1;
@@ -375,22 +395,24 @@ const fromHash=()=>{const m=location.hash.match(/^#dia-(\d+)$/);if(m)openDay(+m[
 window.addEventListener('hashchange',fromHash);fromHash();
 
 const N=days.length;
-const stops=[[1,'Lima'],[2,'Paracas'],[4,'Huacachina'],[5,'Nazca'],[6,'Chala'],[7,'Arequipa']];
+const stops=[[1,'Lima'],[2,'Paracas'],[4,'Huacachina'],[5,'Nazca'],[6,'Chala'],[7,'Arequipa'],[10,'Colca'],[12,'Titicaca'],[14,'Cusco']];
+const topA=Math.max(2500,Math.ceil(Math.max(...days.map(d=>d.a))/500)*500);
 const s=document.getElementById('prof');
 const draw=()=>{
  const W=s.clientWidth,H=s.clientHeight,narrow=W<520;
- const ml=narrow?44:56,mr=narrow?18:40,mt=34,mb=30,top=2500;
+ const ml=narrow?44:56,mr=narrow?18:40,mt=34,mb=30,top=topA;
  const x=d=>ml+(d-1)/(N-1)*(W-ml-mr),y=a=>mt+(1-a/top)*(H-mt-mb);
  let o='';
- [0,500,1000,1500,2000,2500].forEach(a=>{if(narrow&&a%1000&&a!==2500)return;o+=`<line x1="${ml}" x2="${W-mr}" y1="${y(a)}" y2="${y(a)}" stroke="var(--line)"/><text class="ax" x="${ml-8}" y="${y(a)+4}" text-anchor="end">${a.toLocaleString('es-ES')} m</text>`});
- days.forEach((d,i)=>{const lab=narrow?d.d.split(' ')[1]:d.d;o+=`<text class="ax" x="${x(i+1)}" y="${H-8}" text-anchor="${i===0?'start':i===N-1?'end':'middle'}">${lab}</text>`});
+ let k0=0;phases.forEach(ph=>{const a0=k0+1,a1=k0+ph.days.length;k0=a1;const half=N>1?(x(2)-x(1))/2:0;const x0=Math.max(ml,x(a0)-half),x1=Math.min(W-mr,x(a1)+half);o+=`<rect x="${x0}" y="${mt-26}" width="${x1-x0}" height="${H-mt-mb+26}" fill="var(${ph.c})" opacity=".07"/>`});
+ [...Array(top/500+1).keys()].map(k=>k*500).forEach(a=>{if(a%1000&&(narrow||top>2500)&&a!==top)return;o+=`<line x1="${ml}" x2="${W-mr}" y1="${y(a)}" y2="${y(a)}" stroke="var(--line)"/><text class="ax" x="${ml-8}" y="${y(a)+4}" text-anchor="end">${a.toLocaleString('es-ES')} m</text>`});
+ days.forEach((d,i)=>{const step=narrow?(N>7?4:1):(N>7?2:1);if(i!==N-1&&(i%step||(N-1-i)<step/2))return;const lab=(narrow||N>7)?d.d.split(' ').slice(1).join(' '):d.d;o+=`<text class="ax" x="${x(i+1)}" y="${H-8}" text-anchor="${i===0?'start':i===N-1?'end':'middle'}">${lab}</text>`});
  const pts=days.map((d,i)=>[x(i+1),y(d.a)]);
  const path='M'+pts.map(p=>p.join(',')).join('L');
- o+=`<path d="${path}L${x(N)},${y(0)}L${x(1)},${y(0)}Z" fill="var(--f1)" opacity=".12"/>`;
+ o+=`<path d="${path}L${x(N)},${y(0)}L${x(1)},${y(0)}Z" fill="var(--ink)" opacity=".06"/>`;
  let len=0;for(let i=1;i<pts.length;i++)len+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
- o+=`<path class="line" style="--len:${Math.ceil(len)}" d="${path}" fill="none" stroke="var(--f1)" stroke-width="3" stroke-linejoin="round"/>`;
- days.forEach((d,i)=>{o+=`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${narrow?4:6}" fill="var(--f1)" stroke="var(--bg)" stroke-width="2"/>`});
- stops.forEach(([d,l],k)=>{const dy=d===N?-14:(k%2?-32:-14);const anc=d===1?'start':d>=N-1?'end':'middle';o+=`<text x="${x(d)}" y="${y(days[d-1].a)+dy}" text-anchor="${anc}">${l}</text>`});
+ o+=`<path class="line" style="--len:${Math.ceil(len)}" d="${path}" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>`;
+ days.forEach((d,i)=>{o+=`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${narrow?4:6}" fill="var(${d.c})" stroke="var(--bg)" stroke-width="2"/>`});
+ stops.forEach(([d,l],k)=>{if(d>N)return;if(narrow&&!['Lima','Arequipa','Titicaca','Cusco'].includes(l))return;const below={'Colca':26};const dy=below[l]||(d===N?-14:(days[d-1].a<1000?(k%2?-32:-14):-14));const anc=d===1?'start':d>=N-1?'end':'middle';o+=`<text x="${x(d)}" y="${y(days[d-1].a)+dy}" text-anchor="${anc}">${l}</text>`});
  s.innerHTML=o;
 };
 const ro=new ResizeObserver(draw);ro.observe(s);

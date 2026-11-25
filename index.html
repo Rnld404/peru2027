@@ -151,6 +151,9 @@ footer{color:var(--soft);font-size:14px}
 
 <script>
 {
+
+   
+   
 /* ====================================================================
    DATOS DEL VIAJE: aquí es donde se rellena todo.
    Cada día tiene:
@@ -164,6 +167,10 @@ footer{color:var(--soft);font-size:14px}
    Cada lista va entre [ ] con textos entre 'comillas' separados por comas.
    Una lista vacía [] sale en la página como "Por rellenar".
    ==================================================================== */
+
+
+
+   
 const fase={nombre:'Fase 1 · Costa sur',fechas:'5–11 abril',ruta:'Lima, Paracas, Huacachina, Nazca y Chala hasta Arequipa'};
 
 const dias=[
@@ -172,15 +179,38 @@ const dias=[
   tr:[],
   st:['Wyndham Costa del Sol Lima Airport, junto a la terminal nueva.'],
   notas:['eSIM: ¿se puede comprar en el aeropuerto a esa hora? Quizás estén cerradas las tiendas.']},
+
+
+   
  {t:'Lima → Paracas',d:'Mar 6 abr',a:5,plan:[],tr:[],st:[],notas:[]},
+plan:['prueba prueba 1,2,3,'],
+   tr:[],
+   st:[¿Hotel?]
+   notitas: [Asi no te dejas nada (:]}
+   
+
+   
  {t:'Paracas',d:'Mié 7 abr',a:5,plan:[],tr:[],st:[],notas:[]},
+
+
+   
  {t:'Paracas → Huacachina',d:'Jue 8 abr',a:400,plan:[],tr:[],st:[],notas:[]},
+
+   
  {t:'Huacachina → Nazca',d:'Vie 9 abr',a:520,plan:[],tr:[],st:[],notas:[]},
+
+   
  {t:'Nazca → Chala',d:'Sáb 10 abr',a:10,plan:[],tr:[],st:[],notas:[]},
+
+
+
+   
  {t:'Chala → Arequipa',d:'Dom 11 abr',a:2335,plan:[],tr:[],st:[],notas:[]}
 ];
 
 const reservar=['Vuelo BCN → Lima','Vuelo STG → Lima'];
+
+   
 /* ==================== fin de los datos ==================== */
 
 const days=dias.map(d=>({...d,c:'--f1'}));

@@ -232,7 +232,7 @@ const openDay=i=>{
   <section><h4>Dónde dormir</h4><div class="stays">${x.st.map(([nm,pr,why])=>`<div class="stay">${pr?`<span class="pr">${pr}</span>`:''}<b>${nm}</b>${why?`<span>${why}</span>`:''}</div>`).join('')}</div></section>
   <section><h4>Comer</h4>${li(x.fo)}</section>
   <section><h4>Consejos</h4>${li(x.ti)}</section>
-  <section class="wide"><h4>¿Dudas? </h4><div class="cost"> ;
+ 
  document.getElementById('dprev').disabled=i<=1;
  document.getElementById('dnext').disabled=i>=days.length;
  if(!dlg.open)dlg.showModal();

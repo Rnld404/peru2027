@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perú 2027 · Nau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday: a trip two people will open on the road
+   IDEA an Andean woven strip: four phases as four coloured bands, coast to jungle
+   PICTURE altitude profile of every night, sea level up to the altiplano and down to the selva
+   COLOUR white ground, deep ink; sand-orange coast, lake blue, Andean magenta, jungle green
+   TYPE Outfit for titles and day numbers, Inter for text
+   LAYOUT title and key figures on top, profile full width, then day cards by phase; phone stacks */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#15101a);--ink:light-dark(#1b1420,#f3eef6);--soft:light-dark(#5e5566,#b9afc2);--line:light-dark(#e8e2ec,#342b3c);--card:light-dark(#faf8fb,#1e1726);--f1:light-dark(#d9661a,#f08a3c);--f2:light-dark(#1f5fa8,#5b9be0);--f3:light-dark(#b0124f,#e8508a);--f4:light-dark(#2b7a4b,#5cc28a)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,.num{font-family:Outfit,Inter,sans-serif}
+.band{padding-block:clamp(28px,4vw,56px);padding-inline:max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.weave{display:flex;height:14px}
+.weave span{flex:var(--d)}
+.weave span:nth-child(1){background:var(--f1)}
+.weave span:nth-child(2){background:var(--f2)}
+.weave span:nth-child(3){background:var(--f3)}
+.weave span:nth-child(4){background:var(--f4)}
+header .top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px 40px;align-items:end}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lead{margin:10px 0 0;color:var(--soft);font-size:17px;max-width:60ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(7.5em,1fr));gap:12px}
+.facts div{border-top:1px solid var(--line);padding-top:8px}
+.facts b{display:block;font:700 clamp(26px,3vw,34px)/1.1 Outfit,sans-serif;white-space:nowrap}
+.facts span{color:var(--soft);font-size:14px}
+.fig{position:relative;height:clamp(260px,34vw,360px);margin-top:28px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.fig text{font:500 13px Inter,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:4px}
+.fig .ax{fill:var(--soft);font-size:12px}
+.cap{color:var(--soft);font-size:14px;margin:8px 0 0;max-width:75ch}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-block:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px max(5vw,16px);max-width:none}
+nav a{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:22px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+nav a:hover,nav a:focus-visible{background:var(--card);outline:2px solid var(--line)}
+nav i{width:12px;height:12px;border-radius:50%;display:inline-block}
+@media(max-width:899px){nav{position:static}}
+.phase{border-top:1px solid var(--line)}
+.ph-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;margin-bottom:20px}
+h2{font-size:clamp(28px,3.6vw,40px);line-height:1.05;letter-spacing:-.02em;margin:0}
+.ph-head p{margin:0;color:var(--soft)}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:3px 10px;border-radius:12px;background:var(--card);border:1px solid var(--line);margin-left:8px;vertical-align:middle}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px}
+.day{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px}
+.num{font-size:44px;font-weight:800;line-height:.9;color:var(--c);grid-row:span 2;min-width:1.3em;text-align:right}
+.day h3{font-size:20px;line-height:1.2;margin:0}
+.date{color:var(--soft);font-size:14px;white-space:nowrap}
+.day ul{grid-column:1/-1;margin:10px 0 0;padding-left:20px}
+.day li{margin:3px 0}
+.day li b{white-space:nowrap}
+.sleep{grid-column:1/-1;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--soft)}
+.sleep strong{color:var(--ink)}
+.day{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;transition:border-color .15s,transform .15s}
+.day:hover{border-color:var(--c)}
+.day:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.more{grid-column:1/-1;margin-top:10px;font-weight:600;font-size:15px;color:var(--c)}
+dialog{width:min(860px,100vw - 24px);max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:18px;background:var(--bg);color:var(--ink);box-shadow:0 20px 60px rgb(0 0 0/.35)}
+dialog::backdrop{background:rgb(15 8 20/.55)}
+.dh{position:sticky;top:0;z-index:1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 16px;align-items:center;padding:20px 22px 16px;background:var(--bg);border-bottom:4px solid var(--c)}
+.dh .num{font-size:54px;grid-row:span 2}
+.dh h2{font-size:clamp(24px,3.4vw,34px)}
+.dh .date{grid-column:2}
+.x{grid-row:1/3;grid-column:3;width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;cursor:pointer}
+.db{padding:20px 22px 8px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 28px}
+.db section{min-width:0}
+.db .wide{grid-column:1/-1}
+.db h4{font:700 17px Outfit,sans-serif;margin:0 0 8px;color:var(--c)}
+.db ul{margin:0;padding-left:20px}
+.db li{margin:4px 0}
+.stays{display:grid;gap:8px}
+.stay{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
+.stay b{display:block}
+.stay .pr{float:right;font-weight:700;white-space:nowrap;margin-left:8px}
+.stay span{color:var(--soft);font-size:14px}
+.cost{font:700 22px Outfit,sans-serif}
+.df{display:flex;justify-content:space-between;gap:12px;padding:14px 22px 20px;border-top:1px solid var(--line);margin-top:12px}
+.df button{min-height:44px;padding:0 18px;border-radius:22px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 15px Inter,sans-serif;cursor:pointer}
+.df button:disabled{opacity:.35;cursor:default}
+@media(max-width:600px){.db{grid-template-columns:minmax(0,1fr);padding:16px}.dh{padding:16px}.dh .num{font-size:42px}dialog{width:100vw;max-width:100vw;max-height:100dvh;height:100dvh;border-radius:0;margin:0}}
+.todo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.todo ul{list-style:none;padding:0;margin:0}
+.todo li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.todo li b{flex:none;width:7.5em;font-family:Outfit,sans-serif}
+.todo h2{margin-bottom:14px}
+footer{color:var(--soft);font-size:14px}
+@media(max-width:760px){header .top,.todo{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.num{font-size:36px}.day{padding:14px}}
+@media(prefers-reduced-motion:no-preference){.line{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.6s ease-out forwards}@keyframes draw{to{stroke-dashoffset:0}}}
+</style>
+</head>
+<body>
+<div class="weave" aria-hidden="true"><span style="--d:1"></span></div>
+
+<header class="band">
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Perú 2027 · Fase 1: la costa sur</h1>
+        <p class="lead">Para darnos un poco de motivación, vamos a preparar el viaje juntos, por fases. Cada uno puede proponer hoteles, rutas, buses, actividades y restaurantes, y lo vamos cerrando poco a poco. Empezamos por la Fase 1: del 5 al 11 de abril, de Lima a Arequipa por la costa. ¡TQMM! 💛</p>
+        <p class="lead" style="font-size:15px">Pulsa cualquier día para ver toda la información.</p>
+      </div>
+      <div class="facts">
+        <div><b>7</b><span>días</span></div>
+        <div><b>6</b><span>paradas</span></div>
+        <div><b>2.335 m</b><span>llegada a Arequipa</span></div>
+        <div><b>25–45 €</b><span>alojamiento por noche</span></div>
+      </div>
+    </div>
+    <div class="fig" id="fig" role="img" aria-label="Perfil de altitud de cada noche de la Fase 1"><svg id="prof"></svg></div>
+    <p class="cap">Altitud de cada noche. Seis noches junto al mar y, al final, Arequipa a 2.335 m: el primer escalón antes del altiplano.</p>
+  </div>
+</header>
+
+<nav aria-label="Secciones"><div class="wrap">
+  <a href="#fase-1"><i style="background:var(--f1)"></i>Fase 1 · Costa sur</a>
+  <a href="#reservar">Qué reservar</a>
+</div></nav>
+
+<main id="phases"></main>
+
+<section class="band" id="reservar">
+  <div class="wrap todo">
+    <div>
+      <h2>Qué reservar y cuándo</h2>
+      <ul>
+        <li><b>Ya</b><span>Vuelo Barcelona–Lima, con llegada el 5 de abril a las 19:30.</span></li>
+        <li><b>Febrero</b><span>Alojamientos de la Fase 1, siempre con cancelación gratuita.</span></li>
+        <li><b>Marzo</b><span>Bus de Cruz del Sur Lima–Paracas del 6 de abril, a las 10:30.</span></li>
+        <li><b>Marzo</b><span>Bus de Cruz del Sur Paracas–Ica del 8 de abril, a las 10:10.</span></li>
+        <li><b>En el viaje</b><span>Tour de Ballestas y vuelo de Nazca: se reservan allí, comparando 2 o 3 agencias.</span></li>
+        <li><b>En el viaje</b><span>Buses Nazca–Chala y Chala–Arequipa: se compran en la terminal el día antes.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Trucos para ahorrar</h2>
+      <ul>
+        <li><b>Mediodía</b><span>Pedir siempre el «menú»: entrada, plato y bebida por 15–25 soles.</span></li>
+        <li><b>Taxis</b><span>Acordar el precio antes de subir, o usar Uber donde funcione.</span></li>
+        <li><b>Hoteles</b><span>Regla de 25–45 € por noche. Solo saltarla en algún sitio especial.</span></li>
+        <li><b>Tours</b><span>Combinados y contratados en persona salen más baratos que por internet.</span></li>
+        <li><b>Monedas</b><span>Llevar soles sueltos para tasas de terminal y muelles.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="band" style="border-top:1px solid var(--line)">
+  <div class="wrap">Precios orientativos de noviembre de 2026, para dos personas salvo que se diga otra cosa: confirmarlos al reservar. Las fases 2, 3 y 4 se añadirán cuando las cerremos.</div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <div class="dh" id="dhead"><div class="num" id="dn"></div><h2 id="dt"></h2><div class="date" id="dd"></div><button class="x" id="dx" aria-label="Cerrar">×</button></div>
+  <div class="db" id="dbody"></div>
+  <div class="df"><button id="dprev">← Día anterior</button><button id="dnext">Día siguiente →</button></div>
+</dialog>
+
+<script>
+{
+const info={
+ 1:{tr:['BCN → Lima: llegada a las 19:30.','STG → Lima: llegada por confirmar. Quien llegue primero espera en la zona de llegadas internacionales.','Migración y maletas: 45–60 min.','Al hotel: recogida del hotel o taxi oficial dentro de la terminal. Nunca un taxi de la calle.'],
+  st:[['Sunset Hostel Airport','~20 €','Nota 9,0 en Booking con más de 4.000 opiniones. Habitación doble privada.'],['Hospedaje Celerina & Elio','~27 €','Casa familiar en el Callao, nota 9.'],['Wyndham Costa del Sol Lima Airport','~90 €','4 estrellas con piscina cubierta, junto a la terminal nueva. Para darse el capricho.']],
+  fo:['Cena ligera en el hotel o en la propia terminal.'],
+  ti:['En abril Perú va 7 horas por detrás de España.','Sacar 100–200 soles en un cajero del aeropuerto.','eSIM comprada desde España o SIM en el aeropuerto.','Comprobar en el mapa la distancia del hotel a la terminal nueva, abierta en 2025.'],co:'60–130 €'},
+ 2:{tr:['Uber del hotel a Cruz del Sur: Av. Javier Prado Este 1109, La Victoria. 40–60 min, 15–20 €.','Bus Cruz del Sur de las 10:30, llegada sobre las 14:00. 60–70 soles por persona.','Billetes en cruzdelsur.com.pe 2–4 semanas antes. Piso de arriba, primera fila.','Llegar 30 min antes con el pasaporte. Llevar monedas por si cobran la tasa de terminal.'],
+  st:[['Coco Lodge Paracas','mirar','Nota 9,6, a 100 m del malecón de El Chaco. La favorita si el precio cuadra.'],['Coco & Ainhoa Lodge','desde ~24 $','Solo adultos, tranquilo. El más barato.'],['Casa Paraquitas','mirar','Frente al mar, nota 9,5. Más tipo apartamento.'],['Hotel Gran Palma','desde ~44 $','Plan B seguro: 7,3 con más de 1.300 opiniones.']],
+  fo:['Desayuno en la cafetería de la terminal.','Almuerzo: menú en El Cordón y La Rosa, piso de arriba con brisa.','Cena: Cevichería Jhosselyne, Malecón El Chaco stand 10. Probar el chupe de pescado o de cangrejo.'],
+  ti:['Chaqueta en el bus: el aire acondicionado va fuerte.','Reservar en el malecón el tour Ballestas + Reserva, comparando 2 o 3 agencias.','Por la tarde sopla viento y refresca.'],co:'125–175 €'},
+ 3:{tr:['A pie al muelle de El Chaco.','El tour combinado recoge en el alojamiento para la Reserva.'],
+  st:[['Mismo alojamiento de Paracas','','Segunda noche.']],
+  fo:['Café rápido en el malecón antes del barco.','Almuerzo: menú de pescado en Lagunillas, dentro de la Reserva.','Cena: Restaurant Paracas, en la azotea. Ceviche de corvina o ceviche panko.'],
+  ti:['Tour combinado desde unos 35 € por persona.','Son dos áreas protegidas con dos pagos: preguntar si van incluidos.','Gorra, crema, gafas de sol y chaqueta: en el barco salpica.'],co:'150–200 €'},
+ 4:{tr:['Bus Cruz del Sur Paracas → Ica a las 10:10, llegada 11:40. Unos 15 $ por persona.','Taxi Ica → Huacachina, 10 min. Acordar el precio antes de subir.','No ir andando: son más de 4 km con maletas y mucho calor.'],
+  st:[['La Casa de Bamboo','~30 $','Piscina y desayuno incluido, cerca del oasis.'],['Hostal Huacachina Sunset','desde ~46 $','Piscina con vista y seguridad 24 h.'],['Hospedaje Rocha','mirar','Piscina, a 100 m de la laguna. Pedir baño privado.']],
+  fo:['Almuerzo: menú en algún restaurante del oasis.','Cena junto a la laguna con un pisco sour: estáis en la tierra del pisco.'],
+  ti:['Siesta de 14:00 a 15:30: es la hora de más calor.','Subir andando a la duna al atardecer es gratis.','Buggy opcional: empresa bien valorada y cinturón puesto.','Zapatillas cerradas y ropa que se pueda llenar de arena.'],co:'120–200 €'},
+ 5:{tr:['Taxi de Huacachina a la terminal de Ica.','Bus Cruz del Sur a las 12:00, llegada a Nazca 14:40. Unos 11 $ por persona.','Tour de la tarde contratado en el centro de Nazca.'],
+  st:[['Nasca Travel One Hostel','mirar','Calidad-precio 9,2, a 1 km del centro. Probablemente el más barato.'],['Hotel Alegría Nasca','~73 $','Piscina y en el centro, nota 8,3.'],['Casa Andina Standard Nasca','desde ~66 $','Cadena fiable con piscina y desayuno.']],
+  fo:['Almuerzo de menú en el centro.','Cena tranquila y a dormir pronto.'],
+  ti:['Opcional: amanecer en la duna de Huacachina.','Reservar el vuelo de las líneas para primera hora: menos viento, menos mareo.','Preguntar en la terminal los horarios del bus a Chala.'],co:'130–200 €'},
+ 6:{tr:['Recogida a las 7:30 hacia el aeródromo de Nazca.','Vuelo sobre las líneas a las 8:00, 30–35 min en el aire.','Bus a Chala con Turismo Tacna o Romeliza, unas 2 h 50 min, 20–27 $. Salen cada 3 h más o menos.','Taxi a Puerto Inca, 10 km al norte. Pedir que espere.'],
+  st:[['Hotel Meflo Playa Grande','desde ~34 $','Balcón con vistas al mar. Pedir habitación interior: el sábado hay música en la playa.']],
+  fo:['Pescado del día en algún restaurante sencillo de Chala.'],
+  ti:['Antes del vuelo, desayuno muy ligero o nada, y pastilla para el mareo.','Al llegar a Chala, comprar en la terminal el bus del domingo a Arequipa.','Puerto Inca: ruinas junto al mar, cala tranquila y atardecer sin nadie.'],co:'—'},
+ 7:{tr:['Bus de día Chala → Arequipa, unas 6 h 30 min, 22–29 $ por persona.','Online solo aparece un bus a las 20:30: confirmar el de día en la terminal de Chala.','Taxi del Terrapuerto al centro, 15 min.'],
+  st:[['Peru Swiss Hostel','~26 $','Habitación doble en pleno centro, ubicación 9,2.'],['Hostal Qoyllurwasi','~36 $','Calle Bolívar 102, centro histórico.'],['Airbnb en el centro','mirar','Habitación doble con baño privado y terraza, anfitriona Superanfitriona.']],
+  fo:['Llevar agua y algo de comer para el bus.','Cena en el centro, cerca de la Plaza de Armas.'],
+  ti:['Arequipa está a 2.300 m: el primer escalón de la altura.','3 noches aquí para aclimatarse antes del Colca.'],co:'—'}
+};
+const phases=[
+ {id:1,c:'--f1',name:'Fase 1 · Costa sur',dates:'5–11 abril',sub:'Lima, Paracas, Huacachina, Nazca y Chala hasta Arequipa',days:[
+  {t:'Llegada a Lima',d:'Lun 5 abr',a:150,p:['<b>BCN → Lima</b>: llegada a las <b>19:30</b>.','<b>STG → Lima</b>: hora de llegada por confirmar.','Nos encontramos en el aeropuerto, vamos al hotel, cena ligera y a dormir.','Es un día corto por la hora: el viaje empieza de verdad el día 2.'],s:'Lima aeropuerto. Pendiente: Sunset Hostel Airport (unos 20 €) o Wyndham Costa del Sol (unos 90 €).'},
+  {t:'Lima → Paracas',d:'Mar 6 abr',a:5,p:['<b>9:00</b> Uber a Cruz del Sur, Av. Javier Prado Este 1109. Desayuno en la terminal.','<b>10:30</b> bus a Paracas, 60–70 soles por persona, unas 3 h 30 min.','<b>14:00</b> almuerzo de menú en El Cordón y La Rosa.','Tarde: playa de El Chaco, malecón y reservar el tour del día siguiente. Atardecer.','Cena en la Cevichería Jhosselyne (Malecón, stand 10).'],s:'Paracas, 2 noches: Coco Lodge o Coco & Ainhoa Lodge.'},
+  {t:'Islas Ballestas y Reserva',d:'Mié 7 abr',a:5,p:['<b>8:00</b> barco a las Ballestas, 2 h: el Candelabro, lobos marinos y pingüinos.','<b>11:00</b> Reserva de Paracas: Playa Roja y La Catedral.','<b>13:30</b> menú de pescado en Lagunillas.','Tarde libre y atardecer. Cena en Restaurant Paracas, en la azotea.','Tour combinado desde unos 35 € por persona. Preguntar si incluye entradas.'],s:'Paracas.'},
+  {t:'Paracas → Huacachina',d:'Jue 8 abr',a:400,p:['<b>10:10</b> bus Cruz del Sur a Ica, llega a las 11:40, unos 15 $.','Taxi de 10 min a Huacachina: acordar el precio antes.','Menú, piscina y siesta en las horas de calor.','Atardecer en las dunas: subir andando (gratis) o buggy y sandboard.','Cena junto a la laguna con un pisco sour.'],s:'Huacachina, 1 noche: La Casa de Bamboo (unos 30 $) o Hostal Huacachina Sunset.'},
+  {t:'Huacachina → Nazca',d:'Vie 9 abr',a:520,p:['Mañana libre: amanecer en la duna y desayuno sin prisa.','<b>12:00</b> bus Cruz del Sur Ica → Nazca, llega a las 14:40, unos 11 $.','Tarde: cementerio de Chauchilla y acueductos de Cantalloc.','Reservar el vuelo sobre las líneas para primera hora y mirar los buses a Chala.'],s:'Nazca, 1 noche: Nasca Travel One Hostel u Hotel Alegría.'},
+  {t:'Líneas de Nazca → Chala',d:'Sáb 10 abr',a:10,p:['<b>8:00</b> vuelo sobre las líneas, 30–35 min. Desayuno ligero y pastilla si marea.','<b>11:00</b> bus a Chala (Turismo Tacna o Romeliza), unas 2 h 50 min.','Al llegar, comprar en la terminal el bus del domingo a Arequipa.','<b>16:00</b> Puerto Inca: ruinas junto al mar, cala tranquila y atardecer.'],s:'Chala: Hotel Meflo Playa Grande. Pedir habitación interior: el sábado hay música en la playa.'},
+  {t:'Chala → Arequipa',d:'Dom 11 abr',a:2335,p:['Bus de día, unas 6 h 30 min, 22–29 $ por persona.','Llegada al Terrapuerto y taxi al centro, 15 min.','Paseo por la Plaza de Armas iluminada y cena tranquila.'],s:'Arequipa, 3 noches: Peru Swiss Hostel (unos 26 $) u Hostal Qoyllurwasi.'}]}
+];
+
+const days=phases.flatMap(ph=>ph.days.map(d=>({...d,c:ph.c})));
+let n=0;
+document.getElementById('phases').innerHTML=phases.map(ph=>`
+<section class="band phase" id="fase-${ph.id}"><div class="wrap">
+ <div class="ph-head"><h2 style="color:var(${ph.c})">${ph.name}</h2><p>${ph.dates} · ${ph.sub}</p></div>
+ <div class="days">${ph.days.map(d=>{n++;return `
+  <article class="day" style="--c:var(${ph.c})" role="button" tabindex="0" data-i="${n}" aria-label="Día ${n}: ${d.t}. Ver detalles">
+   <div class="num">${n}</div><h3>${d.t}</h3><div class="date">${d.d}</div>
+   <ul>${d.p.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <div class="sleep"><strong>Duerme:</strong> ${d.s}</div>
+   <div class="more">Ver toda la info →</div>
+  </article>`}).join('')}</div>
+</div></section>`).join('');
+
+const dlg=document.getElementById('dlg'),dbody=document.getElementById('dbody');
+let cur=1;
+const li=a=>`<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+const openDay=i=>{
+ const d=days[i-1],x=info[i];if(!d||!x)return;cur=i;
+ dlg.style.setProperty('--c',`var(${d.c})`);
+ document.getElementById('dn').textContent=i;
+ document.getElementById('dt').textContent=d.t;
+ document.getElementById('dd').textContent=`${d.d} · altitud ${d.a.toLocaleString('es-ES')} m`;
+ dbody.innerHTML=`
+  <section class="wide"><h4>Plan del día</h4>${li(d.p)}</section>
+  <section><h4>Transporte</h4>${li(x.tr)}</section>
+  <section><h4>Dónde dormir</h4><div class="stays">${x.st.map(([nm,pr,why])=>`<div class="stay">${pr?`<span class="pr">${pr}</span>`:''}<b>${nm}</b>${why?`<span>${why}</span>`:''}</div>`).join('')}</div></section>
+  <section><h4>Comer</h4>${li(x.fo)}</section>
+  <section><h4>Consejos</h4>${li(x.ti)}</section>
+  <section class="wide"><h4>Coste aproximado del día (2 personas)</h4><div class="cost">${x.co==='—'?'Por calcular':x.co}</div></section>`;
+ document.getElementById('dprev').disabled=i<=1;
+ document.getElementById('dnext').disabled=i>=days.length;
+ if(!dlg.open)dlg.showModal();
+ dlg.scrollTop=0;
+ if(location.hash!=='#dia-'+i)history.replaceState(null,'','#dia-'+i);
+};
+const closeDay=()=>{if(dlg.open)dlg.close();};
+dlg.addEventListener('close',()=>{if(location.hash.startsWith('#dia-'))history.replaceState(null,'',location.pathname+location.search);});
+dlg.addEventListener('click',e=>{if(e.target===dlg)closeDay();});
+document.getElementById('dx').addEventListener('click',closeDay);
+document.getElementById('dprev').addEventListener('click',()=>openDay(cur-1));
+document.getElementById('dnext').addEventListener('click',()=>openDay(cur+1));
+dlg.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&cur>1)openDay(cur-1);if(e.key==='ArrowRight'&&cur<days.length)openDay(cur+1);});
+document.querySelectorAll('.day').forEach(c=>{
+ c.addEventListener('click',()=>openDay(+c.dataset.i));
+ c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDay(+c.dataset.i);}});
+});
+const fromHash=()=>{const m=location.hash.match(/^#dia-(\d+)$/);if(m)openDay(+m[1]);};
+window.addEventListener('hashchange',fromHash);fromHash();
+
+const N=days.length;
+const stops=[[1,'Lima'],[2,'Paracas'],[4,'Huacachina'],[5,'Nazca'],[6,'Chala'],[7,'Arequipa']];
+const s=document.getElementById('prof');
+const draw=()=>{
+ const W=s.clientWidth,H=s.clientHeight,narrow=W<520;
+ const ml=narrow?44:56,mr=narrow?18:40,mt=34,mb=30,top=2500;
+ const x=d=>ml+(d-1)/(N-1)*(W-ml-mr),y=a=>mt+(1-a/top)*(H-mt-mb);
+ let o='';
+ [0,500,1000,1500,2000,2500].forEach(a=>{if(narrow&&a%1000&&a!==2500)return;o+=`<line x1="${ml}" x2="${W-mr}" y1="${y(a)}" y2="${y(a)}" stroke="var(--line)"/><text class="ax" x="${ml-8}" y="${y(a)+4}" text-anchor="end">${a.toLocaleString('es-ES')} m</text>`});
+ days.forEach((d,i)=>{const lab=narrow?d.d.split(' ')[1]:d.d;o+=`<text class="ax" x="${x(i+1)}" y="${H-8}" text-anchor="${i===0?'start':i===N-1?'end':'middle'}">${lab}</text>`});
+ const pts=days.map((d,i)=>[x(i+1),y(d.a)]);
+ const path='M'+pts.map(p=>p.join(',')).join('L');
+ o+=`<path d="${path}L${x(N)},${y(0)}L${x(1)},${y(0)}Z" fill="var(--f1)" opacity=".12"/>`;
+ let len=0;for(let i=1;i<pts.length;i++)len+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+ o+=`<path class="line" style="--len:${Math.ceil(len)}" d="${path}" fill="none" stroke="var(--f1)" stroke-width="3" stroke-linejoin="round"/>`;
+ days.forEach((d,i)=>{o+=`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="${narrow?4:6}" fill="var(--f1)" stroke="var(--bg)" stroke-width="2"/>`});
+ stops.forEach(([d,l],k)=>{const dy=d===N?-14:(k%2?-32:-14);const anc=d===1?'start':d>=N-1?'end':'middle';o+=`<text x="${x(d)}" y="${y(days[d-1].a)+dy}" text-anchor="${anc}">${l}</text>`});
+ s.innerHTML=o;
+};
+const ro=new ResizeObserver(draw);ro.observe(s);
+}
+</script>
+</body>
+</html>

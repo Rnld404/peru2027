@@ -94,6 +94,15 @@ dialog::backdrop{background:rgb(15 8 20/.55)}
 .db ul{margin:0;padding-left:20px}
 .db li{margin:4px 0}
 .stays{display:grid;gap:8px}
+.gal{grid-column:1/-1;position:relative}
+.gtrack{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;border-radius:14px}
+.gtrack figure{flex:0 0 100%;margin:0;scroll-snap-align:start;min-width:0}
+.gtrack img{width:100%;height:clamp(210px,42vw,360px);object-fit:cover;border-radius:14px;display:block;background:var(--card)}
+.gtrack figcaption{font-size:14px;color:var(--soft);margin-top:6px}
+.gbtn{position:absolute;top:calc(clamp(210px,42vw,360px)/2 - 22px);width:44px;height:44px;border-radius:22px;border:0;background:rgb(0 0 0/.5);color:#fff;font-size:22px;cursor:pointer}
+.gbtn.prev{left:8px}.gbtn.next{right:8px}
+.gcount{position:absolute;top:10px;right:10px;background:rgb(0 0 0/.55);color:#fff;font-size:13px;padding:3px 10px;border-radius:12px}
+.pics{color:var(--soft);font-weight:500}
 .stay{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
 .stay b{display:block}
 .stay .pr{float:right;font-weight:700;white-space:nowrap;margin-left:8px}
@@ -186,6 +195,10 @@ footer{color:var(--soft);font-size:14px}
      tr    transporte
      st    dónde dormimos (opciones)
      notas consejos, ideas, cosas que no olvidar
+     fotos (opcional) fotos que salen arriba al abrir el día. Se suben a GitHub
+           (por ejemplo a una carpeta "fotos") y se ponen así:
+           fotos:['fotos/paracas.jpg','fotos/ballestas.jpg']
+           o con pie de foto: fotos:[['fotos/paracas.jpg','Atardecer en Paracas']]
    Cada lista va entre [ ] con textos entre 'comillas' separados por comas.
    Una lista vacía [] sale en la página como "Por rellenar".
    ==================================================================== */
@@ -323,7 +336,8 @@ const dias3=[
  {t:'Cusco',d:'Mar 20 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
  {t:'Valle Sagrado',d:'Mié 21 abr',a:2790,plan:[],tr:[],st:[],notas:[]},
  {t:'Ollantaytambo → Aguas Calientes',d:'Jue 22 abr',a:2040,plan:[],tr:[],st:[],notas:[]},
- {t:'Machu Picchu → Cusco',d:'Vie 23 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
+ {t:'Machu Picchu → Cusco',d:'Vie 23 abr',a:3400,plan:[],tr:[],st:[],notas:[],
+  fotos:[['fondo.jpg?v=2','Machu Picchu entre las nubes']]},
  {t:'Cusco',d:'Sáb 24 abr',a:3400,plan:[],tr:[],st:[],notas:[]},
  {t:'Montaña de Colores',d:'Dom 25 abr',a:3400,plan:[],tr:[],st:[],notas:[]}
 ];
@@ -378,7 +392,7 @@ document.getElementById('phases').innerHTML=phases.map(ph=>`
    <div class="num">${n}</div><h3>${d.t}</h3><div class="date">${d.d}</div>
    ${d.plan.length?`<ul>${d.plan.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p style="grid-column:1/-1;margin:10px 0 0">${vacio}</p>`}
    <div class="sleep"><strong>Duerme:</strong> ${d.st.length?d.st[0]:'<span class="empty">por decidir</span>'}</div>
-   <div class="more">Abrir ficha →</div>
+   <div class="more">Abrir ficha →${(d.fotos||[]).length?` <span class="pics">· ${d.fotos.length} ${d.fotos.length>1?"fotos":"foto"}</span>`:""}</div>
   </article>`}).join('')}</div>
 </div></section>`).join('');
 let rn=0;
@@ -397,11 +411,20 @@ const openDay=i=>{
  document.getElementById('dn').textContent=i;
  document.getElementById('dt').textContent=d.t;
  document.getElementById('dd').textContent=`${d.d} · altitud ${d.a.toLocaleString('es-ES')} m`;
+ const fs=(x.fotos||[]).map(f=>Array.isArray(f)?f:[f,'']);
  dbody.innerHTML=`
+  ${fs.length?`<section class="gal"><div class="gtrack" id="gt">${fs.map(([src,cap],k)=>`<figure><img src="${src}" alt="${cap||x.t+' – foto '+(k+1)}" loading="lazy">${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`).join('')}</div>${fs.length>1?`<span class="gcount" id="gc">1 / ${fs.length}</span><button class="gbtn prev" id="gp" aria-label="Foto anterior">‹</button><button class="gbtn next" id="gn" aria-label="Foto siguiente">›</button>`:''}</section>`:''}
   <section class="wide"><h4>Plan del día</h4>${li(x.plan)}</section>
   <section><h4>Transporte</h4>${li(x.tr)}</section>
   <section><h4>Dónde dormir</h4>${x.st.length?`<div class="stays">${x.st.map(o=>`<div class="stay"><b>${o}</b></div>`).join('')}</div>`:li([])}</section>
   <section class="wide"><h4>Notas e ideas</h4>${li(x.notas)}</section>`;
+ const gt=document.getElementById('gt');
+ if(gt&&fs.length>1){
+  const go=dir=>{const k=Math.round(gt.scrollLeft/gt.clientWidth)+dir;gt.children[Math.max(0,Math.min(fs.length-1,k))].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});};
+  document.getElementById('gp').addEventListener('click',()=>go(-1));
+  document.getElementById('gn').addEventListener('click',()=>go(1));
+  gt.addEventListener('scroll',()=>{document.getElementById('gc').textContent=`${Math.round(gt.scrollLeft/gt.clientWidth)+1} / ${fs.length}`;});
+ }
  document.getElementById('dprev').disabled=i<=1;
  document.getElementById('dnext').disabled=i>=days.length;
  if(!dlg.open)dlg.showModal();

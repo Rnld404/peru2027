@@ -94,12 +94,12 @@ dialog::backdrop{background:rgb(15 8 20/.55)}
 .db ul{margin:0;padding-left:20px}
 .db li{margin:4px 0}
 .stays{display:grid;gap:8px}
-.gal{grid-column:1/-1;position:relative}
+.gal{grid-column:1/-1;position:relative;container-type:inline-size}
 .gtrack{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;border-radius:14px}
 .gtrack figure{flex:0 0 100%;margin:0;scroll-snap-align:start;min-width:0}
-.gtrack img{width:100%;height:clamp(210px,42vw,360px);object-fit:cover;border-radius:14px;display:block;background:var(--card)}
+.gtrack img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;display:block;background:var(--card)}
 .gtrack figcaption{font-size:14px;color:var(--soft);margin-top:6px}
-.gbtn{position:absolute;top:calc(clamp(210px,42vw,360px)/2 - 22px);width:44px;height:44px;border-radius:22px;border:0;background:rgb(0 0 0/.5);color:#fff;font-size:22px;cursor:pointer}
+.gbtn{position:absolute;top:calc(100cqw * 5 / 16 - 22px);width:44px;height:44px;border-radius:22px;border:0;background:rgb(0 0 0/.5);color:#fff;font-size:22px;cursor:pointer}
 .gbtn.prev{left:8px}.gbtn.next{right:8px}
 .gcount{position:absolute;top:10px;right:10px;background:rgb(0 0 0/.55);color:#fff;font-size:13px;padding:3px 10px;border-radius:12px}
 .pics{color:var(--soft);font-weight:500}
@@ -381,7 +381,7 @@ const reservar={
 /* ==================== fin de los datos ==================== */
 
 const fases=[{...fase,c:'--f1',dias},{...fase2,c:'--f2',dias:dias2},{...fase3,c:'--f3',dias:dias3},{...fase4,c:'--f4',dias:dias4}];
-const days=fases.flatMap(f=>f.dias.map(d=>({...d,c:f.c})));
+const days=fases.flatMap(f=>f.dias.map(d=>({plan:[],tr:[],st:[],notas:[],...d,c:f.c})));
 const info=Object.fromEntries(days.map((d,i)=>[i+1,d]));
 const vacio='<span class="empty">Por rellenar ✏️</span>';
 const phases=fases.map((f,k)=>({id:k+1,c:f.c,name:f.nombre,dates:f.fechas,sub:f.ruta,days:f.dias}));
@@ -406,7 +406,7 @@ document.getElementById('res').innerHTML=phases.map(ph=>`<h3 class="rph" style="
 
 const dlg=document.getElementById('dlg'),dbody=document.getElementById('dbody');
 let cur=1;
-const li=a=>a.length?`<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p style="margin:0">${vacio}</p>`;
+const li=a=>(a||[]).length?`<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p style="margin:0">${vacio}</p>`;
 const openDay=i=>{
  const d=days[i-1],x=info[i];if(!d||!x)return;cur=i;
  dlg.style.setProperty('--c',`var(${d.c})`);
